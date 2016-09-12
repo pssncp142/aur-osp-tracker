@@ -1,5 +1,5 @@
 pkgname=osp-tracker
-pkgver=4.92
+pkgver=4.94
 arch=('x86_64')
 pkgrel=1
 pkgdesc='Tracker video analysis and modeling tool'
@@ -8,19 +8,25 @@ license=('GPL3')
 depends=('gtk2'
          'gconf'
          'java-runtime')
-source=("http://www.compadre.org/osp/images/tracker/Tracker-4.92-linux-64bit-installer.run"
+_runname="Tracker-${pkgver}-linux-64bit-installer.run"
+source=("http://www.compadre.org/osp/images/tracker/${_runname}"
         "tracker.sh"
         "tracker.desktop")
-sha256sums=('0d5ba0f77990988f35039351b0aa03e8ee1d159b71531999e75c50d7b04d2837'
+sha256sums=('55af3e01effb04d7149ee9c9191c762aeb9a96e8d2dbcb013af3ee9953753174'
             'SKIP'
             'SKIP')
 
-
 package() {
-  echo $pkgdir
+  echo "${pkgdir}"
   export XDG_UTILS_INSTALL_MODE=user
   msg2 'Starting Tracker installer'
-  "./Tracker-4.92-linux-64bit-installer.run" --mode text
+  chmod +x "./${_runname}"
+  "./${_runname}" \
+	  --mode text \
+	  --tracker-home "${pkgdir}/opt/tracker" \
+	  --experiments-home "${pkgdir}/opt/tracker/share" \
+	  --unattendedmodeui minimal \
+	  --enable-components Experiments
   msg2 'Creating desktop file and symlinks'
   mkdir $pkgdir/usr $pkgdir/usr/bin
   ln -s "/opt/tracker/tracker.sh" "${pkgdir}/usr/bin/${pkgname}"
