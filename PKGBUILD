@@ -27,6 +27,7 @@ package() {
 	  --mode unattended \
 	  --tracker-home "${pkgdir}/opt/tracker" \
 	  --experiments-home "${pkgdir}/opt/tracker/share" \
+	  --enable-components Experiments \
 	  --unattendedmodeui none || true #ignore errors due to attempts to copy files to /usr/share/applications
 
   msg2 'Creating desktop file and symlinks'
