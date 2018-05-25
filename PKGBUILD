@@ -23,7 +23,7 @@ package() {
   export XDG_UTILS_INSTALL_MODE=user
   msg2 'Starting Tracker installer'
   chmod +x "./${_runname}"
-  printf 'y\ny\ny\n' | "./${_runname}" \
+  ./${_runname} \
 	  --mode unattended \
 	  --tracker-home "${pkgdir}/opt/tracker" \
 	  --experiments-home "${pkgdir}/opt/tracker/share" \
